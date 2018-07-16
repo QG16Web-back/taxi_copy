@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qg.taxi.dao.mysql.GPSMeterDataHisDao">
+    <insert id="addGpsMeterHisList" parameterType="com.qg.taxi.model.GpsMeterDataHis">
+        INSERT INTO ${graph}(PLATENO,CHAUFFEUR_NO,WORK_BEGIN_TIME,WORK_END_TIME,PRICE,LOAD_MILEAGE,METER_MONEY,EMPTY_MILEAGE,EMPTY_BEGIN_TIME,PAY_MODE,TIME_REPRE)
+        VALUES
+        <foreach collection="list" item="item" separator =",">
+            (
+            #{item.plateNo},
+            #{item.chauffeurNo},
+            #{item.workBeginTime},
+            #{item.workEndTime},
+            #{item.price},
+            #{item.loadMileage},
+            #{item.meterMoney},
+            #{item.emptyMileage},
+            #{item.emptyBeginTime},
+            #{item.payMode},
+            #{item.timeRepre}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="addGpsOperateHisList" parameterType="com.qg.taxi.model.GpsOperateHis">
+        INSERT INTO ${graph}(EQUIPMENT_ID,PLATENO,COMPANY_ID,CHAUFFEUR_NO,TEAM_CODE,EMPTY_MILE
+        ,EMPTY_BEGIN_TIME,WORK_BEGIN_TIME,WORK_END_TIME,UNIT_PRICE,LOAD_MILE,SLOW_COUNT_TIME,OPERATE_MONEY,EVALUATE,TRADE_CODE,GET_ON_LONGITUDE,GET_ON_LATITUDE,GET_OFF_LONGITUDE,GET_OFF_LATITUDE
+        ,TIME_REPRE,GEOHASH)
+        VALUES
+        <foreach collection="list" item="item" separator =",">
+            (
+            #{item.equipmentId},
+            #{item.plateNo},
+            #{item.companyId},
+            #{item.chauffeurNo},
+            #{item.teamCode},
+            #{item.emptyMile},
+            #{item.emptyBeginTime},
+            #{item.workBeginTime},
+            #{item.workEndTime},
+            #{item.unitPrice},
+            #{item.loadMile},
+            #{item.slowCountTime},
+            #{item.operateMoney},
+            #{item.evaluate},
+            #{item.tradeCode},
+            #{item.getOnLongitude},
+            #{item.getOnLatitude},
+            #{item.getOffLongitude},
+            #{item.getOffLatitude},
+            #{item.timeRepre},
+            (SELECT ST_GEOHASH(#{item.getOnLongitude},#{item.getOnLatitude}, 6))
+            )
+        </foreach>
+    </insert>
+
+    <!--以geoHash、小时为单位统计出租车的总量-->
+    <select id="countByTimeGeoHash" resultType="com.qg.taxi.model.CountModel">
+        SELECT COUNT(*) AS 'count' ,
+        TIME_REPRE AS 'timeRepre', #{geoHash} AS 'geoHash'
+        FROM ${tableName}
+        WHERE GEOHASH LIKE #{geoHash}"%"
+        GROUP BY TIME_REPRE
+    </select>
+
+    <!-- 一天以小时为单位统计出出租车分布-->
+    <select id="countByDay" resultType="com.qg.taxi.model.CountModel">
+        SELECT COUNT(*) AS 'count' ,
+        TIME_REPRE AS 'timeRepre', GEOHASH7 AS 'geoHash', MIN_REPRE AS 'minRepre'
+        FROM ${tableName}
+        WHERE TIME_REPRE = ${timeRepre} AND GEOHASH7 != 's000000'
+        GROUP BY MIN_REPRE, GEOHASH7
+    </select>
+
+    <select id="selectGeoHashByTime" resultType="com.qg.taxi.model.GPS">
+        SELECT GET_ON_LONGITUDE AS 'lng', GET_ON_LATITUDE AS 'lat' , TIME_REPRE AS 'timeRepre'
+        FROM ${tableName}
+        WHERE GET_ON_LONGITUDE BETWEEN ${lngmin} AND ${lngmax}
+        AND GET_ON_LATITUDE BETWEEN ${latmin} AND ${latmax}
+        ORDER BY TIME_REPRE
+    </select>
+
+    <select id="geoHashCount" resultType="com.qg.taxi.model.GPS">
+        SELECT COUNT(*) AS 'count',
+        TIME_REPRE AS 'timeRepre' ,
+        GEOHASH5 AS 'geoHash' ,
+        GET_ON_LATITUDE AS 'lat', GET_ON_LONGITUDE AS 'lng'
+        FROM ${tableName}
+        WHERE GEOHASH7 != 'S000000' GROUP BY TIME_REPRE,GEOHASH5
+    </select>
+
+    <select id="totalCount" resultType="com.qg.taxi.model.TakeTaxiCount">
+        SELECT
+        TIME_REPRE          as time,
+        count('TIME_REPRE') as count
+        from ${table}
+        GROUP BY TIME_REPRE
+    </select>
+
+    <select id="takeTaxiCount" resultType="com.qg.taxi.model.TakeTaxiCount">
+        SELECT
+        TIME_REPRE          as time,
+        count('TIME_REPRE') as count
+        from ${table}
+        WHERE TIME_REPRE >= ${startTime}
+        AND TIME_REPRE &lt;= ${endTime}
+        GROUP BY TIME_REPRE;
+    </select>
+
+    <select id="getIncome" resultType="com.qg.taxi.model.DriverInfo">
+        SELECT
+        plateno          as number,
+        SUM(METER_MONEY) as income
+        FROM ${table}
+        GROUP BY PLATENO;
+    </select>
+
+    <select id="getEmptyMileage" resultType="com.qg.taxi.model.DriverInfo">
+        SELECT
+        PLATENO            as number,
+        SUM(EMPTY_MILEAGE) as emptyMileage
+        from ${table}
+        group by PLATENO
+    </select>
+
+    <select id="getIncomeByHour" resultType="com.qg.taxi.model.DriverInfo">
+        SELECT
+        plateno          AS number,
+        SUM(METER_MONEY) AS income,
+        TIME_REPRE       as hour
+        FROM
+        ${table}
+        GROUP BY
+        PLATENO, TIME_REPRE;
+    </select>
+
+    <select id="getEmptyMileageByHour" resultType="com.qg.taxi.model.DriverInfo">
+        SELECT
+        plateno            AS number,
+        SUM(EMPTY_MILEAGE) as emptyMileage,
+        TIME_REPRE         as hour
+        FROM
+        ${table}
+        GROUP BY
+        PLATENO, TIME_REPRE;
+    </select>
+
+    <select id="getIncomeByCustomQuery" resultType="com.qg.taxi.model.DriverInfo">
+        SELECT
+        plateno          as number,
+        SUM(METER_MONEY) as income
+        FROM ${table}
+        WHERE TIME_REPRE >= ${startTime}
+        AND TIME_REPRE &lt;= ${endTime}
+        GROUP BY PLATENO;
+    </select>
+
+    <select id="getEmptyMileageByCustomQuery" resultType="com.qg.taxi.model.DriverInfo">
+        SELECT
+        plateno          as number,
+        SUM(EMPTY_MILEAGE) as emptyMileage
+        FROM ${table}
+        WHERE TIME_REPRE >= ${startTime}
+        AND TIME_REPRE &lt;= ${endTime}
+        GROUP BY PLATENO;
+    </select>
+
+    <!-- 通过geoHash+车牌+上车时间 拼接成rowkey 给 hbase 作为主键 -->
+    <select id="getOpsHisData" resultType="com.qg.taxi.model.GpsOperateHis">
+        SELECT ID AS 'id',
+          PLATENO AS 'plateNo',
+          WORK_BEGIN_TIME AS 'workBeginTime' ,
+          GEOHASH AS 'geoHash' FROM ${tableName}
+    </select>
+
+    <update id="updateOpsHis" parameterType="java.util.List">
+            update ${tableName}
+            <set>
+                  ROW_KEY = #{rowKey}
+            </set>
+              where ID = ${id}
+
+    </update>
+
+
+    <select id="diagramSelect" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS 'count'
+        FROM ${tableName}
+        WHERE GEOHASH5 IN
+        <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        GROUP BY TIME_REPRE
+    </select>
+
+    <select id="selectGuangZhou" resultType ="com.qg.taxi.model.CalculateGeoHash">
+        SELECT COUNT(*) AS 'count' ,GEOHASH5 AS 'geoHash'
+        FROM ${tableName} WHERE GEOHASH5 = #{geoHash}
+    </select>
+
+</mapper>
