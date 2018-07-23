@@ -1,6 +1,6 @@
 package com.qg.taxi.service;
 
-import com.qg.taxi.model.Gps;
+import com.qg.taxi.model.gps.Gps;
 import com.qg.taxi.model.excel.CountModel;
 
 import java.io.IOException;
@@ -22,18 +22,18 @@ public interface GpsMeterDataHisService {
      * @param start 起始位置
      * @param end 结束位置
      * @param k 第k部分，比如k=100，则插入单位长度*100这一部分的数据
+     * @param size 导入每一次的容量大小
      * @throws ParseException 异常
      */
-    void insertMeterHisToMysql(int start, int end, int k) throws ParseException;
+    void insertMeterHisToMysql(int start, int end, int k, int size) throws ParseException;
 
-    /**
-     * 表2插入操作
-     * @param start
-     * @param end
-     * @param k
-     * @throws ParseException
-     */
-    void insertOperateHisToMysql(int start, int end, int k) throws ParseException;
+
+
+//    /**
+//     * 为gps_meter_his 表更新上rowkey字段
+//     * @param tableName 表名
+//     */
+//    void updateMeterHis(String tableName);
 
     /**
      * 统计一个区域内各个时间段的打车总量
@@ -46,25 +46,6 @@ public interface GpsMeterDataHisService {
      * @param precis    划分geoHash长度
      * @return excel 链接
      */
-     Map<Gps, List<CountModel>> countGeoHashByTime(double latmin, double lonmin,
-                                                         double latmax, double lonmax, int precis, Date date) throws IOException ;
-
-    /**
-     * 获得这个区域的gps坐标，按照时间排列
-     * @param latmin
-     * @param lonmin
-     * @param latmax
-     * @param lonmax
-     * @param date
-     * @return
-     */
-     Map<Integer, List<Gps>> getAreaGpsMapByDay(double latmin, double lonmin,
-                                                      double latmax, double lonmax,
-                                                      Date date);
-
-    /**
-     * 为gps_meter_his 表更新上rowkey字段
-     * @param tableName 表名
-     */
-    void updateMeterHis(String tableName);
+    String countGeoHashByTime(double latmin, double lonmin,
+                                                  double latmax, double lonmax, int precis, Date date) throws IOException;
 }

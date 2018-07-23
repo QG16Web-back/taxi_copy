@@ -1,8 +1,8 @@
 package com.qg.taxi.dao.mysql2;
 
-import com.qg.taxi.model.Gps;
-import com.qg.taxi.model.Node;
-import com.qg.taxi.model.Way;
+import com.qg.taxi.model.gps.Gps;
+import com.qg.taxi.model.inform.Node;
+import com.qg.taxi.model.inform.Way;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;

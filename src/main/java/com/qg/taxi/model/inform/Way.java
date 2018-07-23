@@ -1,5 +1,6 @@
-package com.qg.taxi.model;
+package com.qg.taxi.model.inform;
 
+import com.qg.taxi.model.inform.Node;
 import lombok.Data;
 
 import java.util.List;

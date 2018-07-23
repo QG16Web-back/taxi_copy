@@ -1,4 +1,4 @@
-package com.qg.taxi.model;
+package com.qg.taxi.model.gps;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

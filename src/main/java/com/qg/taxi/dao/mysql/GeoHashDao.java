@@ -1,8 +1,7 @@
 package com.qg.taxi.dao.mysql;
 
-import com.qg.taxi.model.CalculateGeoHash;
-import com.qg.taxi.model.Gps;
-import com.qg.taxi.model.Node;
+import com.qg.taxi.model.inform.CalculateGeoHash;
+import com.qg.taxi.model.gps.Gps;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.qg.taxi.model;
+package com.qg.taxi.model.gps;
 
 import lombok.Data;
 
@@ -11,7 +11,7 @@ import java.util.Date;
  * motto: All efforts are not in vain
  */
 @Data
-public class GpaMeterDataHis {
+public class GpsMeterDataHis {
     /**
      * 数据序号
      */
@@ -60,4 +60,9 @@ public class GpaMeterDataHis {
      * 时间代表，以小时为代表，后面需要以小时进行统计
      */
     private int timeRepre;
+
+    /**
+     * 行键
+     */
+    private String rowKey;
 }

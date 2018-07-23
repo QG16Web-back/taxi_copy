@@ -40,4 +40,22 @@ public class RowKeyUtil {
 
         return rowKey ;
     }
+
+    public static String getRowKeyMeterHis(long id, String plateNo, Date date) {
+        Map<String, Integer> dateMap = DateUtil.getDayAndHour(date);
+        plateNo = plateNo.replaceAll("粤", "");
+        String month = dateMap.get("month") >= 10 ? dateMap.get("month").toString() :
+                "0" + dateMap.get("month");
+        String day = dateMap.get("day") >= 10 ? dateMap.get("day").toString() :
+                "0" + dateMap.get("day");
+        String hour = dateMap.get("hour") >= 10 ? dateMap.get("hour").toString() :
+                "0" + dateMap.get("hour");
+        String minute = dateMap.get("minute") >= 10 ? dateMap.get("minute").toString() :
+                "0" + dateMap.get("minute");
+
+        return plateNo + month + day
+                + hour
+                + minute
+                + id;
+    }
 }

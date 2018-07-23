@@ -1,11 +1,11 @@
-package com.qg.taxi.model;
+package com.qg.taxi.model.inform;
 
 import lombok.Data;
 
 /**
- * @author:Wilder Gao
- * @time:2018/5/4
- * @Discription：
+ * @author Wilder Gao
+ * time:2018/5/4
+ * Description：geohash的中心坐标和这个geohash的出租车数量
  */
 @Data
 public class CalculateGeoHash {
