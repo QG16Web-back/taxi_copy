@@ -2,6 +2,8 @@ package com.qg.taxi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
+import org.springframework.boot.autoconfigure.solr.SolrAutoConfiguration;
 
 /**
  * @author Wilder Gao
@@ -9,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * description：
  * motto: All efforts are not in vain
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {SolrAutoConfiguration.class, GsonAutoConfiguration.class})
 public class TaxiApplication {
 
     public static void main(String[] args) {
