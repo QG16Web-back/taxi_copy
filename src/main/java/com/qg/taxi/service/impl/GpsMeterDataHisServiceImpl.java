@@ -1,7 +1,7 @@
 package com.qg.taxi.service.impl;
 
 import ch.hsr.geohash.GeoHash;
-import com.qg.taxi.dao.oracle.GpsMeterDataHisDao;
+import com.qg.taxi.dao.oracle.OracleGpsMeterDataHisDao;
 import com.qg.taxi.model.excel.CountModel;
 import com.qg.taxi.model.gps.GpsMeterDataHis;
 import com.qg.taxi.service.GpsMeterDataHisService;
@@ -31,7 +31,7 @@ public class GpsMeterDataHisServiceImpl implements GpsMeterDataHisService {
     private static final String GRAPH_OPERATE_HIS = "operate_his";
 
     @Autowired
-    private GpsMeterDataHisDao oracleDao;
+    private OracleGpsMeterDataHisDao oracleDao;
     @Autowired
     private com.qg.taxi.dao.mysql.GpsMeterDataHisDao mysqlDao;
 

@@ -19,9 +19,7 @@ import javax.sql.DataSource;
  * description：
  * motto: All efforts are not in vain
  */
-
 @Configuration
-// 扫描 Mapper 接口并容器管理
 @MapperScan(basePackages = MySqlDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "mysqlSqlSessionFactory")
 public class MySqlDataSourceConfig {
 

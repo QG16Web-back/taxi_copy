@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * description：
  * motto: All efforts are not in vain
  */
-@Configuration
+//@Configuration
 @MapperScan(basePackages = ThirdDataSourceConfig.PACKAGE, sqlSessionFactoryRef = "thirdSqlSessionFactory")
 public class ThirdDataSourceConfig {
 

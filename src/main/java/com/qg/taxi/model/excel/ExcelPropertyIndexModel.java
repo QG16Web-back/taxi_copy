@@ -4,6 +4,7 @@ import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Wilder Gao
@@ -11,6 +12,7 @@ import lombok.Data;
  * description：打车数量
  * motto: All efforts are not in vain
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 public class ExcelPropertyIndexModel extends BaseRowModel {

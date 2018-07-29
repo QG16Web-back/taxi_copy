@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qg.taxi.dao.mysql.GPSMeterDataHisDao">
-    <insert id="addGpsMeterHisList" parameterType="com.qg.taxi.model.GpsMeterDataHis">
+    <insert id="addGpsMeterHisList" parameterType="com.qg.taxi.model.gps.GpsMeterDataHis">
         INSERT INTO ${graph}(PLATENO,CHAUFFEUR_NO,WORK_BEGIN_TIME,WORK_END_TIME,PRICE,LOAD_MILEAGE,METER_MONEY,EMPTY_MILEAGE,EMPTY_BEGIN_TIME,PAY_MODE,TIME_REPRE)
         VALUES
         <foreach collection="list" item="item" separator =",">
@@ -42,7 +42,7 @@
     </select>
 
 
-    <select id="geoHashCount" resultType="com.qg.taxi.model.GPS">
+    <select id="geoHashCount" resultType="com.qg.taxi.model.gps.Gps">
         SELECT COUNT(*) AS 'count',
         TIME_REPRE AS 'timeRepre' ,
         GEOHASH5 AS 'geoHash' ,

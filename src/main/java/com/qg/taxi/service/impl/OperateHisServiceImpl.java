@@ -1,21 +1,15 @@
 package com.qg.taxi.service.impl;
 
-import ch.hsr.geohash.GeoHash;
-import com.qg.taxi.dao.oracle.GpsMeterDataHisDao;
-import com.qg.taxi.dao.oracle.OperateHisDao;
-import com.qg.taxi.model.excel.CountModel;
+import com.qg.taxi.dao.oracle.OracleOperateHisDao;
 import com.qg.taxi.model.gps.Gps;
 import com.qg.taxi.model.gps.GpsOperateHis;
 import com.qg.taxi.service.OperateHisService;
 import com.qg.taxi.utils.DateUtil;
-import com.qg.taxi.utils.ExcelUtil;
-import com.qg.taxi.utils.MyGeoHashUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
@@ -35,7 +29,7 @@ public class OperateHisServiceImpl implements OperateHisService {
     private static final String graphOperateName = "operate_his";
 
     @Autowired
-    private OperateHisDao oracleDao;
+    private OracleOperateHisDao oracleDao;
 
     @Autowired
     private com.qg.taxi.dao.mysql.OperateHisDao mysqlDao;

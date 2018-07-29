@@ -31,14 +31,12 @@ public class RowKeyUtil {
         String minute = dateMap.get("minute")>=10? dateMap.get("minute").toString() :
                 "0"+dateMap.get("minute");
 
-        String rowKey = month+day
+        return month+day
                 +hour
                 +minute
                 +geoHash
                 +plateNo
                 +id;
-
-        return rowKey ;
     }
 
     public static String getRowKeyMeterHis(long id, String plateNo, Date date) {

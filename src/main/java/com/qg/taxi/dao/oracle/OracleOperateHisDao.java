@@ -15,7 +15,7 @@ import java.util.List;
  */
 @Mapper
 @Repository
-public interface OperateHisDao {
+public interface OracleOperateHisDao {
     /**
      * 从oracle数据中查询第二张表（出租车历史表）指定行的数据
      * @param start 开始行

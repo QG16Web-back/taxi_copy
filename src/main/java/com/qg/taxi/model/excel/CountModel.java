@@ -3,6 +3,7 @@ package com.qg.taxi.model.excel;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Wilder Gao
@@ -11,6 +12,7 @@ import lombok.Data;
  * motto: All efforts are not in vain
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class CountModel extends BaseRowModel {
     /**
