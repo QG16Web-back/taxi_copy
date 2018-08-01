@@ -15,6 +15,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -27,6 +28,7 @@ import java.util.Map;
  * description：
  * motto: All efforts are not in vain
  */
+@Service
 public class HttpApiServiceImpl implements HttpApiService {
 
     private int OK = 200;

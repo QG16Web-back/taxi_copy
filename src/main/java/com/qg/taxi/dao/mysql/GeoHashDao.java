@@ -2,7 +2,9 @@ package com.qg.taxi.dao.mysql;
 
 import com.qg.taxi.model.inform.CalculateGeoHash;
 import com.qg.taxi.model.gps.Gps;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -12,6 +14,8 @@ import java.util.List;
  * description：
  * motto: All efforts are not in vain
  */
+@Mapper
+@Repository
 public interface GeoHashDao {
 
     /**

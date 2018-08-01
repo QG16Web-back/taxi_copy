@@ -1,6 +1,7 @@
 package com.qg.taxi.service.impl;
 
 import ch.hsr.geohash.GeoHash;
+import com.qg.taxi.dao.mysql.GpsMeterDataHisDao;
 import com.qg.taxi.dao.oracle.OracleGpsMeterDataHisDao;
 import com.qg.taxi.model.excel.CountModel;
 import com.qg.taxi.model.gps.GpsMeterDataHis;
@@ -32,8 +33,9 @@ public class GpsMeterDataHisServiceImpl implements GpsMeterDataHisService {
 
     @Autowired
     private OracleGpsMeterDataHisDao oracleDao;
+
     @Autowired
-    private com.qg.taxi.dao.mysql.GpsMeterDataHisDao mysqlDao;
+    private GpsMeterDataHisDao mysqlDao;
 
     @Override
     public void insertMeterHisToMysql(int start, int end, int k, int size) throws ParseException {

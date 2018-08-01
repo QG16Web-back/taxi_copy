@@ -10,8 +10,5 @@
         <module name="taxi_copy" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="taxi_copy" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

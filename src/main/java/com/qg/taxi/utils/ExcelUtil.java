@@ -12,12 +12,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @author Wilder Gao
@@ -119,5 +118,28 @@ public class ExcelUtil {
 
             }
         }
+    }
+
+    public static List<String> getPlate() throws IOException {
+        List<String> list = new ArrayList<>();
+        Resource resource = new ClassPathResource("plate.xls");
+        File file = resource.getFile();
+
+        try {
+            FileInputStream in = new FileInputStream(file);
+
+            HSSFWorkbook wb = new HSSFWorkbook(in);
+
+            Sheet sheet = wb.getSheet("sheet");
+            int firstRowNum = sheet.getFirstRowNum();
+            int lastRowNum = sheet.getLastRowNum();
+
+            for (int i = firstRowNum + 1; i <= lastRowNum; i++) {
+                list.add(sheet.getRow(i).getCell(0).getStringCellValue());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
