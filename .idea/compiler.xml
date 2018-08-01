@@ -7,8 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="taxi" />
-        <module name="taxi_copy" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="taxi_copy" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
